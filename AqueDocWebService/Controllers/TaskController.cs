@@ -19,6 +19,7 @@ namespace AqueDocWebService.Controllers
                 new TaskModel() {Id = 2, Description = "Описание задачи 2", Name = "Задача 2"},
                 new TaskModel() {Id = 3, Description = "Описание задачи 3", Name = "Задача 3"},
                 new TaskModel() {Id = 4, Description = "Описание задачи 4", Name = "Задача 4"},
+                new TaskModel() {Id = 5, Description = "Описание задачи 5", Name = "Задача 5"},
             };
             return models;
         }
