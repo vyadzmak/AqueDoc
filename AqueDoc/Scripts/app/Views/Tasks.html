@@ -1,0 +1,26 @@
+﻿<div ng-controller="tasksController">
+    <div class="row">
+        <!--left -->
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Panel Default
+                    </h3>
+                </div>
+                <ul class="list-group">
+                    <a ui-sref="main.dashboard.tasks.details({taskId: task.Id })" class="list-group-item" ng-repeat="task in tasks">{{task.Name}}</a>
+                    
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!--right -->
+        <div class="col-sm-8">
+            <div ui-view></div>
+        </div>
+    </div>
+
+</div>

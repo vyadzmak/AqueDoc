@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ng-bind="$state.current.data.pageTitle + ' - Optional text'">AqueDoc</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="@Url.Action("Index","Home")">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/sbadmin")
+    @Scripts.Render("~/bundles/angular")
+@*    @Scripts.Render("~/bundles/users")*@
+@*    @Scripts.Render("~/bundles/addScripts")*@
+@*    *@
+    @Scripts.Render("~/bundles/aqueDocApp")
+
+</head>
+
+<body>
+
+    <div ng-app="aqueDocApp">
+        @RenderBody()
+    </div>
+
+    <div>
+        @RenderSection("scripts", required: false)
+    </div>
+</body>
+</html>

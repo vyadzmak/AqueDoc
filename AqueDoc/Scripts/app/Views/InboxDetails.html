@@ -1,0 +1,32 @@
+﻿
+
+    <div class="modal-content"  >
+        <div class="modal-header modal-header-success">
+            <h4>{{inboxMessage.Caption}}</h4>
+        </div>
+        <div class="modal-body">
+            
+            
+            
+            <form>
+                <div class="form-group">
+                    <label class="control-label">Отправитель:</label>
+                    <label class="control-label">{{inboxMessage.SubjectName}}</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Дата:</label>
+                    <label class="control-label">{{inboxMessage.DateTime}}</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Сообщение:</label>
+                    <textarea class="form-control" style="max-width: 100%;" rows="14"> {{inboxMessage.Text}}</textarea>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            </div>
+        </div>
+
+
+    </div>
+
