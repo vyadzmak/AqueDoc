@@ -1,0 +1,600 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using PixCode.DB;
+
+namespace PixCode.Core.Api.Helpers
+{
+    public static class LoadProjectRemover
+    {
+
+        #region helper methods
+
+        #region pie chart
+        /// <summary>
+        /// удаляем все круговые диаграммы проекта
+        
+        /// </summary>
+        private static void RemovePieInformations(List<int> analyticDataIds)
+        {
+            try
+            {
+                LandauEntities entities = new LandauEntities();
+                List<int> pieChartIds = new List<int>();
+                foreach (var analyticDataId in analyticDataIds)
+                {
+                    List<int> tmpPieChartIds =
+                        (from s in entities.PieChart where s.AnalyticDataId == analyticDataId select s.Id).ToList();
+
+                    if (tmpPieChartIds!=null && tmpPieChartIds.Count>0)
+                        pieChartIds.AddRange(tmpPieChartIds);
+                }
+
+                List<PieChartElement> pieChartElements = new List<PieChartElement>();
+
+                foreach (var pieChartId in pieChartIds)
+                {
+                    List<PieChartElement> tmpPieChartElements =
+                        (from s in entities.PieChartElement where s.PieChartId == pieChartId select s).ToList();
+
+                    if (tmpPieChartElements.Count > 0)
+                    {
+                        pieChartElements.AddRange(tmpPieChartElements);
+                    }
+                }
+
+                for (int i = 0; i < pieChartElements.Count; i++)
+                {
+                    entities.PieChartElement.Remove(pieChartElements[i]);
+                }
+                entities.SaveChanges();
+                for (int i = 0; i < pieChartIds.Count; i++)
+                {
+                    int pId = pieChartIds[i];
+                    PieChart chart =
+                        (from pieChart in entities.PieChart where pieChart.Id == pId select pieChart)
+                            .FirstOrDefault();
+
+                    if (chart != null)
+                    {
+                        entities.PieChart.Remove(chart);
+                    }
+                }
+                entities.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+        #endregion
+
+        #region line chart
+        /// <summary>
+        /// удаляем все, что связано с линейными диараммами проекта
+        /// </summary>
+        /// <param name="projectId"></param>
+        private static void RemoveLineInformations(List<int> analyticDataIds)
+        {
+            try
+            {
+                LandauEntities entities = new LandauEntities();
+                //узнаем ID диаграмм линейных диаграмм 
+                List<int> lineChartIds = new List<int>();
+                foreach (var analyticDataId in analyticDataIds)
+                {
+                    List<int> tmpLineChartIds =
+                        (from s in entities.LineChart where s.AnalyticDataId == analyticDataId select s.Id).ToList();
+
+                    if (tmpLineChartIds != null && tmpLineChartIds.Count > 0)
+                        lineChartIds.AddRange(tmpLineChartIds);
+                }
+
+                //узнаем все элементы линейных диаграмм
+
+                List<int> lineElementIds = new List<int>();
+
+                foreach (var lineChartId in lineChartIds)
+                {
+                    List<int> tmpLineChartElements =
+                        (from s in entities.LineChartElement where s.LineChartId == lineChartId select s.Id).ToList();
+
+                    if (tmpLineChartElements.Count>0)
+                        lineElementIds.AddRange(tmpLineChartElements);
+                }
+
+
+                //узнаем все точки
+                List<LineChartPoint> lineChartPoints = new List<LineChartPoint>();
+
+                foreach (var lineElementId in lineElementIds)
+                {
+                    List<LineChartPoint> tmpPoints =
+                        (from s in entities.LineChartPoint where s.LineChartElementId == lineElementId select s).ToList();
+
+                    if (tmpPoints.Count>0)
+                        lineChartPoints.AddRange(tmpPoints);
+                }
+
+                for (int i = 0; i < lineChartPoints.Count; i++)
+                {
+                    entities.LineChartPoint.Remove(lineChartPoints[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < lineElementIds.Count; i++)
+                {
+                    int id = lineElementIds[i];
+                    LineChartElement element =
+                        (from s in entities.LineChartElement where s.Id == id select s).FirstOrDefault();
+
+                    if (element != null)
+                        entities.LineChartElement.Remove(element);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < lineChartIds.Count; i++)
+                {
+                    int id = lineChartIds[i];
+                    LineChart chart = (from s in entities.LineChart where s.Id == id select s).FirstOrDefault();
+                    if (chart != null) entities.LineChart.Remove(chart);
+                }
+                entities.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        #endregion
+        
+        #region stacked chart
+        /// <summary>
+        /// удаляем все, что связано с stacked диараммами проекта
+        /// </summary>
+        /// <param name="projectId"></param>
+        private static void RemoveStackedBarInformations(List<int> analyticDataIds)
+        {
+            try
+            {
+                LandauEntities entities = new LandauEntities();
+                //узнаем ID диаграмм stacked диаграмм 
+                List<int> stackedChartIds = new List<int>();
+                foreach (var analyticDataId in analyticDataIds)
+                {
+                    List<int> tmStackedChartsIds =
+                        (from s in entities.StackedBarchart where s.AnalyticDataId == analyticDataId select s.Id).ToList();
+
+                    if (tmStackedChartsIds != null && tmStackedChartsIds.Count > 0)
+                        stackedChartIds.AddRange(tmStackedChartsIds);
+                }
+
+                //узнаем все элементы stacked диаграмм
+
+                List<int> stackedColumnIds = new List<int>();
+
+                foreach (var stackedChartId in stackedChartIds)
+                {
+                    List<int> tmpStackedColumnElements =
+                        (from s in entities.StackedBarchartColumn where s.StackedBarChartId == stackedChartId select s.Id).ToList();
+
+                    if (tmpStackedColumnElements.Count > 0)
+                        stackedColumnIds.AddRange(tmpStackedColumnElements);
+                }
+
+
+                //узнаем все точки
+                List<StackedBarchartElement> stackedBarchartElements = new List<StackedBarchartElement>();
+
+                foreach (var stackedColumnId in stackedColumnIds)
+                {
+                    List<StackedBarchartElement> tmpStackedElements =
+                        (from s in entities.StackedBarchartElement where s.BarchartColumnId == stackedColumnId select s).ToList();
+
+                    if (tmpStackedElements.Count > 0)
+                        stackedBarchartElements.AddRange(tmpStackedElements);
+                }
+
+                for (int i = 0; i < stackedBarchartElements.Count; i++)
+                {
+                    entities.StackedBarchartElement.Remove(stackedBarchartElements[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < stackedColumnIds.Count; i++)
+                {
+                    int id = stackedColumnIds[i];
+                    StackedBarchartColumn element =
+                        (from s in entities.StackedBarchartColumn where s.Id == id select s).FirstOrDefault();
+
+                    if (element != null)
+                        entities.StackedBarchartColumn.Remove(element);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < stackedChartIds.Count; i++)
+                {
+                    int id = stackedChartIds[i];
+                    StackedBarchart chart = (from s in entities.StackedBarchart where s.Id == id select s).FirstOrDefault();
+                    if (chart != null) entities.StackedBarchart.Remove(chart);
+                }
+                entities.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        #endregion
+
+        #region stacked chart
+        /// <summary>
+        /// удаляем все, что связано с stacked диараммами проекта
+        /// </summary>
+        /// <param name="projectId"></param>
+        private static void RemoveNonStackedBarInformations(List<int> analyticDataIds)
+        {
+            try
+            {
+                LandauEntities entities = new LandauEntities();
+                //узнаем ID диаграмм stacked диаграмм 
+                List<int> nonStackedChartIds = new List<int>();
+                foreach (var analyticDataId in analyticDataIds)
+                {
+                    List<int> tmpNonStackedChartsIds =
+                        (from s in entities.NonStackedBarChart where s.AnalyticDataId == analyticDataId select s.Id).ToList();
+
+                    if (tmpNonStackedChartsIds != null && tmpNonStackedChartsIds.Count > 0)
+                        nonStackedChartIds.AddRange(tmpNonStackedChartsIds);
+                }
+
+                //узнаем все элементы stacked диаграмм
+
+                List<int> nonStackedColumnIds = new List<int>();
+
+                foreach (var nonStackedChartId in nonStackedChartIds)
+                {
+                    List<int> tmpNonStackedColumnElements =
+                        (from s in entities.NonStackedBarChartColumn where s.NonStackedBarchartId == nonStackedChartId select s.Id).ToList();
+
+                    if (tmpNonStackedColumnElements.Count > 0)
+                        nonStackedColumnIds.AddRange(tmpNonStackedColumnElements);
+                }
+
+
+                //узнаем все точки
+                List<NonStackedBarChartElement> nonStackedBarchartElements = new List<NonStackedBarChartElement>();
+
+                foreach (var nonStackedColumnId in nonStackedColumnIds)
+                {
+                    List<NonStackedBarChartElement> tmpStackedElements =
+                        (from s in entities.NonStackedBarChartElement where s.NonStackedBarchartColumnId == nonStackedColumnId select s).ToList();
+
+                    if (tmpStackedElements.Count > 0)
+                        nonStackedBarchartElements.AddRange(tmpStackedElements);
+                }
+
+                for (int i = 0; i < nonStackedBarchartElements.Count; i++)
+                {
+                    entities.NonStackedBarChartElement.Remove(nonStackedBarchartElements[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < nonStackedColumnIds.Count; i++)
+                {
+                    int id = nonStackedColumnIds[i];
+                    NonStackedBarChartColumn element =
+                        (from s in entities.NonStackedBarChartColumn where s.Id == id select s).FirstOrDefault();
+
+                    if (element != null)
+                        entities.NonStackedBarChartColumn.Remove(element);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < nonStackedChartIds.Count; i++)
+                {
+                    int id = nonStackedChartIds[i];
+                    NonStackedBarChart chart = (from s in entities.NonStackedBarChart where s.Id == id select s).FirstOrDefault();
+                    if (chart != null) entities.NonStackedBarChart.Remove(chart);
+                }
+                entities.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        #endregion
+
+        #region table modal
+        /// <summary>
+        /// удаляем ифнормацию по модальным окнам
+        /// </summary>
+        private static void RemoveModalTablesInformation(List<int> analyticDataIds)
+        {
+            try
+            {
+                LandauEntities entities = new LandauEntities();
+
+                List<TableModal> tableModals = new List<TableModal>();
+
+                foreach (var analyticDataId in analyticDataIds)
+                {
+                    List<TableModal> tmpModalTablesIds =
+                        (from s in entities.TableModal where s.AnalyticDataId == analyticDataId select s).ToList();
+                    if (tmpModalTablesIds.Count>0)
+                        tableModals.AddRange(tmpModalTablesIds);
+                }
+
+                List<BodyModal> bodyModals = new List<BodyModal>();
+
+                foreach (var tableModal in tableModals)
+                {
+                    List<BodyModal> tmpBodyModals =
+                        (from s in entities.BodyModal where s.TableModalId == tableModal.Id select s).ToList();
+                    if (tmpBodyModals.Count>0)
+                        bodyModals.AddRange(tmpBodyModals);
+                }
+
+
+                List<RowModal> rowModals = new List<RowModal>();
+
+                foreach (var bodyModal in bodyModals)
+                {
+                    List<RowModal> tmRowModals =
+                        (from s in entities.RowModal where s.ModalBodyId == bodyModal.Id select s).ToList();
+                    if (tmRowModals.Count > 0)
+                        rowModals.AddRange(tmRowModals);
+                }
+
+                List<CellModal> cellModals = new List<CellModal>();
+
+                foreach (var rowModal in rowModals)
+                {
+                    List<CellModal> tmpCellModal =
+                        (from s in entities.CellModal where s.RowModalId == rowModal.Id select s).ToList();
+                    if (tmpCellModal.Count > 0)
+                        cellModals.AddRange(tmpCellModal);
+                }
+
+
+                List<CellModalStyle> cellModalStyles = new List<CellModalStyle>();
+
+                foreach (var cellModal in cellModals)
+                {
+                    List<CellModalStyle> tmpCellModalStyles =
+                        (from s in entities.CellModalStyle where s.CellModalId == cellModal.Id select s).ToList();
+                    if (tmpCellModalStyles.Count > 0)
+                        cellModalStyles.AddRange(tmpCellModalStyles);
+                }
+
+                for (int i = 0; i < cellModalStyles.Count; i++)
+                {
+                    entities.CellModalStyle.Remove(cellModalStyles[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < cellModals.Count; i++)
+                {
+                    entities.CellModal.Remove(cellModals[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < rowModals.Count; i++)
+                {
+                    entities.RowModal.Remove(rowModals[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < bodyModals.Count; i++)
+                {
+                    entities.BodyModal.Remove(bodyModals[i]);
+                }
+                entities.SaveChanges();
+
+                for (int i = 0; i < tableModals.Count; i++)
+                {
+                    entities.TableModal.Remove(tableModals[i]);
+                }
+                entities.SaveChanges();
+
+
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        #endregion
+        
+
+        #region analytic data
+        /// <summary>
+        /// удаляем всю аналитику из проекта
+        /// </summary>
+        /// <param name="projectId"></param>
+        private static void RemoveAnalyticDataFromProject(int projectId)
+        {
+            try
+            {
+                using (LandauEntities entities = new LandauEntities())
+                {
+                    //выбираем ячейки
+                    List<Cell> cells = (from cls in entities.Cell
+                        join rows in entities.Row on cls.RowId equals rows.Id
+                        join body in entities.Body on rows.BodyId equals body.Id
+                        join sheet in entities.Sheet on body.SheetId equals sheet.Id
+                        join document in entities.Documents on sheet.DocumentId equals document.Id
+                        join project in entities.Projects on document.ProjectId equals project.Id
+                        where project.Id == projectId
+                        select cls).ToList();
+
+                    for (int i = 0; i < cells.Count; i++)
+                    {
+                        Cell c = cells[i];
+                        entities.Cell.Remove(c);
+                    }
+                    entities.SaveChanges();
+
+                    //выбираем строки
+                    List<Row> rws = (from rows in entities.Row 
+                                        join body in entities.Body on rows.BodyId equals body.Id
+                                        join sheet in entities.Sheet on body.SheetId equals sheet.Id
+                                        join document in entities.Documents on sheet.DocumentId equals document.Id
+                                        join project in entities.Projects on document.ProjectId equals project.Id
+                                        where project.Id == projectId
+                                        select rows).ToList();
+
+                    for (int i = 0; i < rws.Count; i++)
+                    {
+                        Row r = rws[i];
+                        entities.Row.Remove(r);
+                    }
+                    entities.SaveChanges();
+
+                    //выбираем тело
+                    List<Body> bdy = (from  body in entities.Body
+                                     join sheet in entities.Sheet on body.SheetId equals sheet.Id
+                                     join document in entities.Documents on sheet.DocumentId equals document.Id
+                                     join project in entities.Projects on document.ProjectId equals project.Id
+                                     where project.Id == projectId
+                                     select body).ToList();
+
+                    for (int i = 0; i < bdy.Count; i++)
+                    {
+                        Body b = bdy[i];
+                        entities.Body.Remove(b);
+                    }
+                    entities.SaveChanges();
+
+
+                    //выбираем вкладки
+                    List<Sheet> sht = (from sheet in entities.Sheet
+                                      join document in entities.Documents on sheet.DocumentId equals document.Id
+                                      join project in entities.Projects on document.ProjectId equals project.Id
+                                      where project.Id == projectId
+                                      select sheet).ToList();
+
+                    for (int i = 0; i < sht.Count; i++)
+                    {
+                        Sheet s = sht[i];
+                        entities.Sheet.Remove(s);
+                    }
+                    entities.SaveChanges();
+
+                    Documents documents =
+                        (from s in entities.Documents where s.ProjectId == projectId && s.ViewType == 3 select s)
+                            .FirstOrDefault();
+
+                    int docId = documents.Id;
+
+                    List<DocumentControlVersion> versions =
+                        (from s in entities.DocumentControlVersion where s.DocId == docId select s).ToList();
+
+                    for (int i = 0; i < versions.Count; i++)
+                    {
+                        DocumentControlVersion version = versions[i];
+                        entities.DocumentControlVersion.Remove(version);
+                    }
+
+
+                    List<AnalyzeLog> aLogs =
+                        (from s in entities.AnalyzeLog where s.DocumentId == docId select s).ToList();
+
+                    for (int i = 0; i < aLogs.Count; i++)
+                    {
+                        AnalyzeLog aLog = aLogs[i];
+                        entities.AnalyzeLog.Remove(aLog);
+                    }
+
+                    entities.SaveChanges();
+                    entities.Documents.Remove(documents);
+                    entities.SaveChanges();
+
+                }
+            }
+            catch (Exception exception)
+            {
+
+            }
+        }
+        #endregion
+        #endregion
+        /// <summary>
+        /// удаляем PieCharts
+        /// </summary>
+        private static void RemoveProjectInformation(int projectId)
+        {
+            try
+            {
+                LandauEntities entities = new LandauEntities();
+                //Id модальных окон
+                List<int?> modalViewIds =(from cls in entities.Cell 
+                            join row in entities.Row on cls.RowId equals row.Id
+                            join body in entities.Body on row.BodyId equals body.Id
+                            join sheet in entities.Sheet on body.SheetId equals sheet.Id
+                            join document in entities.Documents on sheet.DocumentId equals document.Id
+                            join project in entities.Projects on document.ProjectId equals project.Id
+                            where project.Id==projectId && document.ViewType==3 select cls.ModalViewId).ToList().Distinct().ToList();
+
+                //вытягиваем дополнительные modalViewId из CellModal
+
+
+
+                List<int> modalCellsId = new List<int>();
+                //идем по всем модальным окнам и получаем все ModalViewCellIds
+                foreach (var modalViewId in modalViewIds)
+                {
+                    if (modalViewId != null)
+                    {
+                        List<int> mCls = (from modalCells in entities.ModalViewCell
+                            join modalRow in entities.ModalViewRow on modalCells.RowId equals modalRow.Id
+                            join modalView in entities.ModalView on modalRow.ModalViewId equals modalView.Id
+                            where modalView.Id == modalViewId
+                            select modalCells.Id).ToList();
+                        modalCellsId.AddRange(mCls);
+
+                    }
+                }
+
+                //вытягиваем все AnalyticDataIds
+                List<int> analyticDataIds = new List<int>();
+
+                foreach (var id in modalCellsId)
+                {
+                    List<int> tmpAnalyticDataIds =
+                        (from s in entities.AnalyticData where s.ModalViewCellId == id select s.Id).ToList();
+                    analyticDataIds.AddRange(tmpAnalyticDataIds);
+                }
+
+                RemovePieInformations(analyticDataIds);
+                RemoveLineInformations(analyticDataIds);
+                RemoveNonStackedBarInformations(analyticDataIds);
+                RemoveStackedBarInformations(analyticDataIds);
+                RemoveModalTablesInformation(analyticDataIds);
+                RemoveAnalyticDataFromProject(projectId);
+            }
+            catch (Exception)
+            {
+            }
+        }
+        /// <summary>
+        /// удаляем данные из проекта
+        /// </summary>
+        public static void RemoveDataFromProject(int projectId)
+        {
+            try
+            {
+                //using (LandauEntities entities = new LandauEntities())
+                {
+                    RemoveProjectInformation(projectId);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+    }
+}

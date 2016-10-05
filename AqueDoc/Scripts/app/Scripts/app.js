@@ -1,5 +1,5 @@
 ﻿var $$ApiUrl = "http://localhost/AqueDocApi/api";
-var aqueDocApp = angular.module("aqueDocApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap']);
+var aqueDocApp = angular.module("aqueDocApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', "FileManagerApp"]);
 
 aqueDocApp.run([
     '$rootScope', '$state', '$stateParams',

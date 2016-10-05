@@ -10,6 +10,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <base href="@Url.Action("Index","Home")">
+    @*<link href="~/Scripts/angular-filemanager/src/css/main.css" rel="stylesheet">*@
+    <link href="~/Scripts/angular-filemanager/src/css/animations.css" rel="stylesheet">
+    <link href="~/Scripts/angular-filemanager/src/css/dialogs.css" rel="stylesheet">
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Styles.Render("~/Content/css")
@@ -18,8 +22,75 @@
     @Scripts.Render("~/bundles/angular")
 @*    @Scripts.Render("~/bundles/users")*@
 @*    @Scripts.Render("~/bundles/addScripts")*@
+
+
 @*    *@
     @Scripts.Render("~/bundles/aqueDocApp")
+
+    <script src="~/Scripts/angular-filemanager/bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="~/Scripts/angular-filemanager/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
+    <script src="~/Scripts/angular-filemanager/src/js/app.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/directives/directives.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/filters/filters.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/providers/config.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/entities/chmod.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/entities/item.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/services/apihandler.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/services/apimiddleware.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/services/filenavigator.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/providers/translations.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/controllers/main.js"></script>
+    <script src="~/Scripts/angular-filemanager/src/js/controllers/selector-controller.js"></script>
+    @*<link href="~/Scripts/angular-filemanager/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Scripts/angular-filemanager/bower_components/bootstrap/dist/js/bootstrap.min.js" rel="stylesheet">*@
+
+    <style>
+        #context-menu-view {
+            display: block !important;
+        }
+        .thumbnail {
+            border: none !important;
+        }
+        
+        .thumbnail.selected {
+            background: #9cabb7 !important;
+            color: white !important;
+        }
+
+        .col-md-3 {
+            width: 25% !important;
+            float: left !important;
+        }
+
+        .col-md-9 {
+            width: 75% !important;
+            float:left !important;
+        }
+
+        .col-120 {
+            width: 100px;
+            max-height: 100px;
+            float: left;
+            margin-bottom: 9px;
+            margin-right: 9px;
+        }
+
+        textarea.form-control {
+            height: 350px;
+        }
+
+        /*li > a {
+            color: #4a4848;
+        }*/
+
+        .col-120 > a {
+            color: #4a4848;
+        }
+    </style>
+    
+
+    
 
 </head>
 

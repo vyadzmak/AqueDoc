@@ -21,6 +21,8 @@ namespace AqueDoc
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/jquery.scoped.js",
+                      //"~/Scripts/angular-filemanager/bower_components/bootstrap/dist/js/bootstrap.min.js",
                       "~/Scripts/bootstrap-dialog.min.js",
                       "~/Scripts/BootstrapMenu.min.js"
                 //
@@ -28,6 +30,7 @@ namespace AqueDoc
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                     //"~/Scripts/angular-filemanager/bower_components/bootstrap/dist/css/bootstrap.min.css",
                       "~/Content/bootstrap-dialog.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/metisMenu.min.css",

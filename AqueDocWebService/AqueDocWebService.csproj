@@ -60,6 +60,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
@@ -143,14 +144,39 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\DocContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Core\Interfaces\IFileManagerResponse.cs" />
+    <Compile Include="Core\Models\FileManagerDownloadResponse.cs" />
+    <Compile Include="Core\Models\FileManagerGetContentResponse.cs" />
+    <Compile Include="Core\Models\FileManagerInfoResponse.cs" />
+    <Compile Include="Core\Models\FileManagerListResponse.cs" />
+    <Compile Include="Core\Models\Node.cs" />
+    <Compile Include="Core\Models\NodesTree.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerChangePermissionsRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerCopyRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerCreateFolderRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerDownloadFileRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerEditRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerGetContentRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerListRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerMoveRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerRemoveRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerRenameRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerRequest.cs" />
+    <Compile Include="Core\Models\Request_models\FileManagerUploadFileRequest.cs" />
+    <Compile Include="Core\Models\ResultContent.cs" />
+    <Compile Include="Core\Request_handlers\RequestHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DB_helpers\DbApi.cs" />
+    <Compile Include="Helpers\DB_helpers\FromDbToModelBuilder.cs" />
+    <Compile Include="Helpers\Request_helpers\RequestFormalizer.cs" />
     <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Models\InboxMailModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -161,6 +187,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB\Files.xml" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

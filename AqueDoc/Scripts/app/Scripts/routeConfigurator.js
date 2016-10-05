@@ -19,8 +19,6 @@
             templateUrl: "Scripts/app/Views/Login.html",
             data: { pageTitle: "Авторизация" },
             onEnter: function($window) { $window.document.title = "Авторизация"; }
-
-
         });
 
     //dashboard container
@@ -62,5 +60,16 @@
           templateUrl: "Scripts/app/Views/TaskDetail.html",
           onEnter: function ($window) { $window.document.title = "Задачи"; }
       });
+
+    //---------//
+    //dashboard container
+    $stateProvider
+        .state("main.dashboard.documents", {
+            url: "/documents",
+            templateUrl: "Scripts/app/Views/FileManager.html",
+            onEnter: function ($window) { $window.document.title = "Рабочая область"; }
+        });
+
+    //---------//
     //$locationProvider.html5Mode(true);
 });
