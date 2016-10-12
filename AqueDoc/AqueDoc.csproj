@@ -177,6 +177,7 @@
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-spinner.js" />
+    <Content Include="Scripts\angular-summernote.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular-ui-router-title.js" />
@@ -190,15 +191,18 @@
     <Content Include="Scripts\app\Controllers\loginController.js" />
     <Content Include="Scripts\app\Controllers\taskDetailsController.js" />
     <Content Include="Scripts\app\Controllers\tasksController.js" />
+    <Content Include="Scripts\app\Controllers\textEditorController.js" />
     <Content Include="Scripts\app\Scripts\routeConfigurator.js" />
     <Content Include="Scripts\app\Scripts\app.js" />
     <Content Include="Scripts\app\Views\InboxDetails.html" />
     <Content Include="Scripts\app\Views\TaskDetail.html" />
     <Content Include="Scripts\app\Views\Tasks.html" />
+    <Content Include="Scripts\app\Views\TextEditor.html" />
     <Content Include="Scripts\bootstrap-dialog.min.js" />
     <Content Include="Scripts\BootstrapMenu.js" />
     <Content Include="Scripts\BootstrapMenu.min.js" />
     <Content Include="Scripts\jquery.scoped.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\app\Views\Dashboard.html" />
     <Content Include="Scripts\app\Views\Inbox.html" />

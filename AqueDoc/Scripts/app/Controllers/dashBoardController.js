@@ -1,5 +1,5 @@
 ﻿(function() {
-    var dashBoardController = function ($scope, $http, $location, $state, usSpinnerService) {
+    var dashBoardController = function ($scope, $http, $location, $state, $uibModal, usSpinnerService) {
 
 
         var dash = function () {
@@ -39,7 +39,20 @@
         };
         dash();
 
+        $scope.open = function () {
+            console.log(111);
+          //  $scope.selectedMessage = id;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'lg',
+                templateUrl: "./Scripts/app/Views/TextEditor.html",
+                controller: "textEditorController",
+                scope: $scope
+            });
+
+        };
+
     };
 
-    aqueDocApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "usSpinnerService", dashBoardController]);
+    aqueDocApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$uibModal", "usSpinnerService", dashBoardController]);
 }())

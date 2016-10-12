@@ -55,6 +55,15 @@
       });
 
     $stateProvider
+      .state("main.dashboard.texteditor", {
+          views: {
+              "modal": {
+                  templateUrl: "Scripts/app/Views/InboxDetails.html"
+              }
+          }
+      });
+
+    $stateProvider
       .state("main.dashboard.tasks.details", {
           url: "/:taskId",
           templateUrl: "Scripts/app/Views/TaskDetail.html",

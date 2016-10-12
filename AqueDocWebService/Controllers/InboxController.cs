@@ -66,7 +66,6 @@ namespace AqueDocWebService.Controllers
 
                 result.Add(new InboxMailModel {Id=i.ToString(), Caption = caption, DateTime = DateTime.Now.ToString(), Description = description, SubjectName =name, Text = text});
            
-
             }
 
 //             result.Add(new InboxMailModel { Caption = "Письмо №2", DateTime = DateTime.Now.ToString(), Description = "Привет как дела?", SubjectName = "" });

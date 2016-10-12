@@ -25,6 +25,7 @@ namespace AqueDoc
                       //"~/Scripts/angular-filemanager/bower_components/bootstrap/dist/js/bootstrap.min.js",
                       "~/Scripts/bootstrap-dialog.min.js",
                       "~/Scripts/BootstrapMenu.min.js"
+
                 //
                       ));
 
@@ -49,12 +50,14 @@ namespace AqueDoc
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                      "~/Scripts/angular.js",
                      "~/Scripts/angular-ui-router.js",
-
+                     
                      "~/Scripts/angular-route.min.js",
                      "~/Scripts/angular-ui-router-title.js",
                      "~/Scripts/spin.js",
                      "~/Scripts/angular-spinner.js",
-                      "~/Scripts/ui-bootstrap-tpls-2.1.3.min.js"
+                      "~/Scripts/ui-bootstrap-tpls-2.1.3.min.js",
+                        "~/Scripts/angular-summernote.js"
+                        //  "~/Scripts/script.js"
                 //
 
                      ));
@@ -67,7 +70,8 @@ namespace AqueDoc
                     "~/Scripts/app/Controllers/inboxController.js",
                     "~/Scripts/app/Controllers/inboxDetailsController.js",
                     "~/Scripts/app/Controllers/tasksController.js",
-                    "~/Scripts/app/Controllers/taskDetailsController.js"
+                    "~/Scripts/app/Controllers/taskDetailsController.js",
+                      "~/Scripts/app/Controllers/textEditorController.js"
 
 //                    "~/Scripts/App/loginCtrl.js",
 //                    "~/Scripts/App/inboxCtrl.js",
